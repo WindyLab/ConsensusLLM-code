@@ -1,112 +1,166 @@
-# LLMs-swarm
+# Multi-agent consensus seeking via LLM
 
-## Getting started
+<div align="center">
+[[Website]](https://voyager.minedojo.org/)
+[[Arxiv]](https://arxiv.org/abs/2305.16291)
+[[PDF]](https://voyager.minedojo.org/assets/documents/voyager.pdf)
 
-Use LLM models as follows:
 
-- dall-e
-- whisper-1
-- gpt-3.5-turbo
-- gpt-3.5-turbo-0301
-- gpt-3.5-turbo-0613
-- gpt-3.5-turbo-16k
-- gpt-3.5-turbo-16k-0613
-- gpt-4
-- gpt-4-0314
-- gpt-4-0613
-- gpt-4-32k
-- gpt-4-32k-0314
-- gpt-4-32k-0613
-- text-embedding-ada-002
-- text-davinci-003
-- text-davinci-002
-- text-curie-001
-- text-babbage-001
-- text-ada-001
-- text-moderation-latest
-- text-moderation-stable
-- text-davinci-edit-001
-- code-davinci-edit-001
-- claude-instant-1
-- claude-2
-- ERNIE-Bot
-- ERNIE-Bot-turbo
-- Embedding-V1
-- PaLM-2
-- chatglm_pro
-- chatglm_std
-- chatglm_lite
-- qwen-v1
-- qwen-plus-v1
-- text-embedding-v1
-- SparkDesk
-- 360GPT_S2_V9
-- embedding-bert-512-v1
-- embedding_s1_v1
-- semantic_similarity_s1_v1
-- 360GPT_S2_V9.4
+[![Python Version](https://img.shields.io/badge/Python-3.10-blue.svg)](https://github.com/MineDojo/Voyager)
+[![GitHub license](https://img.shields.io/github/license/MineDojo/Voyager)](https://github.com/MineDojo/Voyager/blob/main/LICENSE)
 
-## Test
+______________________________________________________________________
 
-Use template below
+</div>
 
-```python
-import datetime
-import subprocess
-from modules.llm.api_key import api_keys
+Abstract
 
-def main():
-  rounds = 9 # conversation round count
-  agents = 3 # number of agents
-  n_exp = 3 # number of experiments
-  # set these variables to 0 if personality is not required
-  n_stubborn = 2
-  n_suggestible = 1
-  current_datetime = datetime.datetime.now()
-  # Format the date as a string
-  formatted_date = current_datetime.strftime("%Y-%m-%d_%H-%M")
-  out_file = "../log/scalar_debate/n_agents{}_rounds{}_n_exp{}_{}".format(agents, rounds, n_exp, formatted_date)
-  print(out_file)
-  cmd = [
-    'python', '../run.py',
-    '--rounds', str(rounds),
-    '--out_file', out_file,
-    '--agents', str(agents),
-    '--n_stubborn', str(n_stubborn),
-    '--n_suggestible', str(n_suggestible),
-    '--n_exp', str(n_exp),
-    # '--not_full_connected'
-  ]
 
-  # 运行命令
-  subprocess.run(cmd)
 
-if __name__ == "__main__":
-  main()
+### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- **Python**: This project is primarily developed in Python. Make sure you have Python installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
+
+- **Python Libraries**: You will need to install several Python libraries to run the code. You can install these libraries using pip, Python's package manager. To install the required libraries, run the following command:
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+  The `requirements.txt` file, included in this repository, lists all the necessary Python libraries along with their versions.
+
+- **Docker (Optional)**: If you plan to deploy the project using Docker, you'll need to have Docker installed on your system. 
+
+  1. You can download Docker Desktop from [docker.com](https://www.docker.com/products/docker-desktop).
+
+  2. **Build the Docker Image:**
+
+     To build a Docker image from the included Dockerfile, navigate to the project directory in your terminal and run the following command:
+
+     ```bash
+     docker build -t consensus-debate .
+     ```
+
+     This command will create a Docker image named `my-project-image` using the Dockerfile in the current directory.
+
+  3. **Mounting Your Code:**
+
+     You can mount your code into the Docker container by using the `-v` option when running the container. For example:
+
+     ```bash
+     docker run -it -p -v /path/to/your/code:/data consensus-debate /bin/bash
+     ```
+
+     Replace `/path/to/your/code` with the absolute path to your project directory. The `-v` flag maps your local code directory to the `/data` directory inside the Docker container.
+
+- **OpenAI API Keys:**
+
+  You will need valid OpenAI API keys to interact with the OpenAI services. Follow these steps to add your API keys to the `config.yml` file:
+
+  1. Create a `config/keys.yml` file in the root directory of the project if it doesn't already exist.
+
+  2. Open the `config/keys.yml` file with a text editor.
+
+  3. Add your API keys in the following format, replacing the placeholder keys with your actual OpenAI API keys:
+
+     ```yaml
+     api_keys:
+       0: "sk-YourFirstAPIKeyHere"
+       1: "sk-YourSecondAPIKeyHere"
+       2: "sk-YourThirdAPIKeyHere"
+     ```
+
+     You can add multiple API keys as needed, and they will be accessible by index.
+
+  4. Set the `api_base` value to the OpenAI API endpoint:
+
+     ```yaml
+     api_base: 'https://api.openai.com/v1'
+     ```
+
+  5. Save and close the `config.yml` file.
+
+By ensuring you have these prerequisites in place, you'll be ready to use the code and run the experiments described in this project.
+
+### Running Experiments
+
+1. **Create Test Files**: In the "test" directory, create one or more Python test files (e.g., `my_experiment.py`) that define the experiments you want to run. These test files should import and use your Python template as a framework for conducting experiments. Below is an example of what a test file might look like:
+
+   ```python
+   import datetime
+   import subprocess
+   
+   def main(n_agent):
+     rounds = 9 # number of rounds in single experiment
+     agents = n_agent
+     n_stubborn = 0 # number of stubborn agents
+     n_suggestible = 0 # number of suggestible agents
+     n_exp = 9 # number of experiments
+     current_datetime = datetime.datetime.now()
+     # Format the date as a string
+     formatted_date = current_datetime.strftime("%Y-%m-%d_%H-%M")
+     out_file = "./log/scalar_debate/n_agents{}_rounds{}_n_exp{}_{}".format(agents, rounds, n_exp, formatted_date)
+     # Build the command line
+     cmd = [
+       'python', './run.py',
+       '--rounds', str(rounds),
+       '--out_file', out_file,
+       '--agents', str(agents),
+       '--n_stubborn', str(n_stubborn),
+       '--n_suggestible', str(n_suggestible),
+       '--n_exp', str(n_exp),
+       # '--not_full_connected' # uncomment this if you want use other topology structures
+     ]
+   
+     # Run the command
+     subprocess.run(cmd)
+   
+   if __name__ == "__main__":
+     main(n_agent=3)
+   ```
+
+   Customize the experiment setup according to your specific needs.
+
+2. **Run Experiments**: You can run the experiments from the command line by executing the test files in the root directory:
+
+   ```bash
+   python test/my_experiment.py
+   ```
+
+   Replace `my_experiment.py` with the name of the test file you want to run. This will execute your experiment using the Python template and generate results accordingly.
+
+### Results
+
+After running experiments using the provided test files, you can find the data files and logs in the "log" directory. The "log" directory is defined in your test files, and it's where your experiment results  are stored.
+
+### Plotting and Generating HTML
+
+#### Plotting Data
+
+The code includes functionality for automatic plotting of data when running experiments. However, if you wish to manually plot a specific data file, you can use the following command:
+
+```bash
+python -m modules.visual.plot ./log/scalar_debate_temp_0_7/n_agents8_rounds9_n_exp9_2023-10-11_13-44/data.p
 ```
 
+Replace the file path (`./log/scalar_debate_temp_0_7/n_agents8_rounds9_n_exp9_2023-10-11_13-44/data.p`) with the path to the specific data file you want to plot. This command will generate plots based on the provided data file.
 
+#### Generating HTML Reports
 
-## Data Plot
+The code automatically generates HTML reports for experiments. However, if you want to manually generate an HTML report for a specific experiment or dataset, you can use the following command:
 
-TODO
+```bash
+python ./gen_html.py
+```
 
-## Conversation Visualization
+This command will generate an HTML report based on the data and logs available in the "log" directory.
 
-TODO
+Please note that for automatically generated HTML reports, the script may take into account the latest experiment data and log files available in the "log" directory. However, running `gen_html.py` manually allows you to create an HTML report at any time, independently of experiment execution.
 
-## Support
+Customize the instructions and file paths in the examples to match the structure and conventions of your project.
 
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### License
 
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+[Specify the project's license and any usage terms or restrictions.]

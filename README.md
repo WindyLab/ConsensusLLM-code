@@ -1,20 +1,17 @@
 # Multi-agent consensus seeking via LLM
 
-<div align="center">
-[[Website]](https://voyager.minedojo.org/)
-[[Arxiv]](https://arxiv.org/abs/2305.16291)
-[[PDF]](https://voyager.minedojo.org/assets/documents/voyager.pdf)
+<p align="center">
+  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+    <img src="https://img.shields.io/badge/arXiv-paper?style=socia&logo=arxiv&logoColor=white&labelColor=grey&color=blue"></a>
+  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+    <img src="https://img.shields.io/badge/Paper-blue?logo=googledocs&logoColor=white&labelColor=grey&color=blue"></a>
+  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+    <img src="https://img.shields.io/badge/Website-blue?logo=semanticweb&logoColor=white&labelColor=grey&color=blue"></a>
+  <a href="https://www.python.org/downloads/">
+    <img src="https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white&labelColor=grey&color=blue"></a>
+</p>
 
-
-[![Python Version](https://img.shields.io/badge/Python-3.10-blue.svg)](https://github.com/MineDojo/Voyager)
-[![GitHub license](https://img.shields.io/github/license/MineDojo/Voyager)](https://github.com/MineDojo/Voyager/blob/main/LICENSE)
-
-______________________________________________________________________
-
-</div>
-
-Abstract
-
+Multi-agent systems driven by large language models (LLMs) have shown promising abilities for solving complex tasks in a collaborative manner. This work addresses *consensus seeking*, which is a fundamental problem for collective decision-making systems. In particular, when multiple LLMs work together, we are interested in how they can reach a consensus through inter-agent negotiation given that they have different initial solutions/opinions about a task. To that end, this work studies an abstract consensus-seeking task, where the state of each LLM-driven agent is a numerical number and they negotiate with each other to reach a consensus value. We found that when not explicitly directed on which strategy should be adopted, the LLMs tend to use the *average strategy* for consensus seeking although they may use some other strategies occasionally. Moreover, this work analyzes the impact of agents' *personalities* and *network topologies* on the negotiation process. It is shown that stubborn agents tend to dominate the consensus outcome, resulting in leader-follower structures, while network topologies can influence the speed and success of consensus convergence. The significance of this work lies in its potential to lay the foundations for understanding the behaviors of LLM-driven multi-agent systems to reach consensus in collaborative problem-solving tasks.
 
 
 ### Prerequisites

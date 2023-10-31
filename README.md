@@ -1,5 +1,4 @@
-# Multi-agent consensus seeking via LLM
-
+# Multi-Agent Consensus Seeking via Large Language Models
 <p align="center">
   <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
     <img src="https://img.shields.io/badge/arXiv-paper?style=socia&logo=arxiv&logoColor=white&labelColor=grey&color=blue"></a>
@@ -13,8 +12,12 @@
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 </p>
 
-Multi-agent systems driven by large language models (LLMs) have shown promising abilities for solving complex tasks in a collaborative manner. This work addresses *consensus seeking*, which is a fundamental problem for collective decision-making systems. In particular, when multiple LLMs work together, we are interested in how they can reach a consensus through inter-agent negotiation given that they have different initial solutions/opinions about a task. To that end, this work studies an abstract consensus-seeking task, where the state of each LLM-driven agent is a numerical number and they negotiate with each other to reach a consensus value. We found that when not explicitly directed on which strategy should be adopted, the LLMs tend to use the *average strategy* for consensus seeking although they may use some other strategies occasionally. Moreover, this work analyzes the impact of agents' *personalities* and *network topologies* on the negotiation process. It is shown that stubborn agents tend to dominate the consensus outcome, resulting in leader-follower structures, while network topologies can influence the speed and success of consensus convergence. The significance of this work lies in its potential to lay the foundations for understanding the behaviors of LLM-driven multi-agent systems to reach consensus in collaborative problem-solving tasks.
+This file is the source code of our paper "Multi-Agent Consensus Seeking via Large Language Models".
 
+<video autoplay muted loop playsinline height="100%">
+  <source src="https://westlakeintelligentrobotics.github.io/ConsensusLLM/static/videos/animation.mp4"
+          type="video/mp4">
+</video>
 
 ### Prerequisites
 

@@ -19,9 +19,13 @@ class GPT():
 		self.__memories = []  # Current memories
 		self.__keep_memory = keep_memory  # Whether to retain memories (not needed for summarizers)
 		self.__temperature = temperature
+		self.__history = []
 
 	def get_memories(self):
 		return self.__memories
+	
+	def get_history(self):
+		return self.__history
 
 	def memories_update(self, role: str, content: str):
 		""" 
@@ -40,6 +44,8 @@ class GPT():
 		if role == "assistant" and len(self.__memories) > 0 and self.__memories[-1]["role"] != "user":
 			raise ValueError("Assistant role can only be added if the previous round was a user role")
 		self.__memories.append({"role": role, "content": content})
+		self.__history.append({"role": role, "content": content})
+
 
 	def generate_answer(self, input: str, try_times=0, **kwargs) -> str:
 		"""
@@ -49,12 +55,14 @@ class GPT():
 		:param kwargs: Parameters to pass for conversation with the model, such as temperature, max_tokens, etc.
 		:return: Text-based output result
 		"""
-		if try_times == 0:
-			if not self.__keep_memory:
+		if not self.__keep_memory:
 				self.__memories = [self.__memories[0]]
+
+		if try_times == 0:
 			self.__memories.append({"role": "user", "content": input})
+			self.__history.append({"role": "user", "content": input})
 		else:
-			if self.__memories[-1]["role"] == "system":
+			if self.__memories[-1]["role"] == "assistant":
 				self.__memories = self.__memories[:-1]
 
 		openai.api_key = self.__openai_key
@@ -68,6 +76,7 @@ class GPT():
 			self.__cost += response['usage']["total_tokens"]
 			content = response['choices'][0]['message']['content']
 			self.__memories.append({"role": "assistant", "content": content})
+			self.__history.append({"role": "assistant", "content": content})
 			return content
 		except Exception as e:
 			raise ConnectionError(f"Error in generate_answer: {e}")

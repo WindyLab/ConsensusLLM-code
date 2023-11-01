@@ -1,10 +1,10 @@
 # Multi-Agent Consensus Seeking via Large Language Models
 <p align="center">
-  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+  <a href="https://arxiv.org/abs/2310.20151">
     <img src="https://img.shields.io/badge/arXiv-paper?style=socia&logo=arxiv&logoColor=white&labelColor=grey&color=blue"></a>
-  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+  <a href="https://arxiv.org/pdf/2310.20151.pdf">
     <img src="https://img.shields.io/badge/Paper-blue?logo=googledocs&logoColor=white&labelColor=grey&color=blue"></a>
-  <a href="https://github.com/WestlakeIntelligentRobotics/consensus-seeking-llm">
+  <a href="https://westlakeintelligentrobotics.github.io/ConsensusLLM">
     <img src="https://img.shields.io/badge/Website-blue?logo=semanticweb&logoColor=white&labelColor=grey&color=blue"></a>
   <a href="https://www.python.org/downloads/">
     <img src="https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white&labelColor=grey&color=blue"></a>

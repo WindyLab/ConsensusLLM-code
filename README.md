@@ -1,4 +1,7 @@
-# Multi-Agent Consensus Seeking via Large Language Models
+
+<div align="center">
+  <h1>Multi-Agent Consensus Seeking via <br> Large Language Models</h1>
+</div>
 <p align="center">
   <a href="https://arxiv.org/abs/2310.20151">
     <img src="https://img.shields.io/badge/arXiv-paper?style=socia&logo=arxiv&logoColor=white&labelColor=grey&color=blue"></a>
@@ -14,11 +17,7 @@
 
 This file is the source code of our paper "Multi-Agent Consensus Seeking via Large Language Models".
 
-
-
 https://github.com/WestlakeIntelligentRobotics/ConsensusLLM-code/assets/51610063/930ab64c-1ed9-46da-9044-3d253f3c1339
-
-
 
 
 ### Prerequisites

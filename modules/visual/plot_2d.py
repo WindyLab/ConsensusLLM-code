@@ -56,7 +56,7 @@ def plot_xy(data_path):
 
 def video(data_path):
   data = read_from_file(data_path)
-  fig, ax = plt.subplots(figsize=(8, 4))  # 调整尺寸
+  fig, ax = plt.subplots(figsize=(8, 4))
   lines = []
   dashed_lines = []
   scatters = []
@@ -90,7 +90,7 @@ def video(data_path):
       dashed_line.set_data([], [])
       scatter.set_offsets(np.empty((0, 2)))
     handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles=handles, labels=labels, loc="upper left", labelspacing=0.6, fontsize=10)  # 标签移到图片外
+    ax.legend(handles=handles, labels=labels, loc="upper left", labelspacing=0.6, fontsize=10)
     return lines + dashed_lines + scatters + start_scatters
 
   def animate(i):
@@ -113,9 +113,9 @@ def video(data_path):
     return lines + dashed_lines + scatters
 
   # plt.tight_layout()
-  output_path = os.path.join(os.path.dirname(data_path), 'animation.mp4')
+  output_path = os.path.join(os.path.dirname(data_path), 'animation.gif')
   ani = FuncAnimation(fig, animate, frames=len(data['pos'][0][0]), init_func=init, blit=False)
-  ani.save(output_path, writer='ffmpeg', fps=20)
+  ani.save(output_path, fps=20)
   plt.show()
 
 

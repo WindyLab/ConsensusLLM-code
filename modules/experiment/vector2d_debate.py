@@ -73,7 +73,7 @@ class Vector2dDebate(Template):
       # Call functions to plot and generate HTML
       trajectory_file = self.__output_file + '/trajectory.p'
       plot_xy(trajectory_file)
-      # video(trajectory_file)
+      video(trajectory_file)
       gen_html(filename, self.__output_file)
 
   def round_postprocess(self, simulation_ind, round, results, agents):

@@ -7,6 +7,8 @@ from ..llm.role import names
 from ..prompt.scenario import agent_role, game_description, round_description
 from ..prompt.form import agent_output_form
 from ..prompt.personality import stubborn, suggestible
+from ..visual.gen_html import gen_html
+from ..visual.plot import plot_result
 
 class ScalarDebate(Template):
   def __init__(self, args, connectivity_matrix):
@@ -63,7 +65,11 @@ class ScalarDebate(Template):
     return input
 
   def exp_postprocess(self):
-    self.save_record(self.__output_file)
+    is_success, filename = self.save_record(self.__output_file)
+    if(is_success):
+      # Call functions to plot and generate HTML
+      plot_result(filename, self.__output_file)
+      gen_html(filename, self.__output_file)
 
   def round_postprocess(self, simulation_ind, round, results, agents):
     for idx, agent in enumerate(agents):
@@ -71,5 +77,5 @@ class ScalarDebate(Template):
       other_position = [x for _, x in res_filtered]
       agent.other_position = other_position
 
-  def update_record(self, record, agent_contexts, simulation_ind):
+  def update_record(self, record, agent_contexts, simulation_ind, agents):
     record[tuple(self.__positions[simulation_ind])] = agent_contexts

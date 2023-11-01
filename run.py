@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from modules.experiment.scalar_debate import ScalarDebate
+from modules.experiment.debate_factory import debate_factory
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -40,5 +40,5 @@ if __name__ == "__main__":
         [True, False, False],
       ]
     )
-  exp = ScalarDebate(args, connectivity_matrix=m)
+  exp = debate_factory("2d", args, connectivity_matrix=m)
   exp.run()

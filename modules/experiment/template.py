@@ -1,8 +1,6 @@
 import os
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from ..visual.gen_html import gen_html
-from ..visual.plot import plot_result
 from tqdm import tqdm
 import pickle
 import threading
@@ -27,7 +25,7 @@ class Template(ABC):
     pass
 
   @abstractmethod
-  def update_record(self, record, agent_contexts, simulation_ind):
+  def update_record(self, record, agent_contexts, simulation_ind, agents):
     pass
 
   @abstractmethod
@@ -81,9 +79,9 @@ class Template(ABC):
     except Exception as e:
       print(f"error:{e}")
     finally:
-      agent_contexts = [agent.get_memories() for agent in agents]
+      agent_contexts = [agent.get_history() for agent in agents]
       with self.__lock:
-        self.update_record(self.__record, agent_contexts, simulation_ind)
+        self.update_record(self.__record, agent_contexts, simulation_ind, agents)
 
   def save_record(self, output_dir: str):
     try:
@@ -92,11 +90,10 @@ class Template(ABC):
       data_file = output_dir + '/data.p'
       # Save the record to a pickle file
       pickle.dump(self.__record, open(data_file, "wb"))
-      # Call functions to plot and generate HTML
-      plot_result(data_file, output_dir)
-      gen_html(data_file, output_dir)
+      return True, data_file
     except Exception as e:
       print(f"An exception occurred while saving the file: {e}")
       print("Saving to the current directory instead.")
       # Backup in case of an exception
       pickle.dump(self.__record, open("backup_output_file.p", "wb"))
+      return False, ""

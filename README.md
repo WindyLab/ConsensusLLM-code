@@ -127,7 +127,15 @@ By ensuring you have these prerequisites in place, you'll be ready to use the co
 
    Customize the experiment setup according to your specific needs.
 
-2. **Run Experiments**: You can run the experiments from the command line by executing the test files in the root directory:
+2. **Setting the Experiment Type**: Before running experiments, make sure to set the appropriate experiment type in the `run.py` file:
+
+   ```python
+   exp = debate_factory("2d", args, connectivity_matrix=m)
+   ```
+
+   The first parameter, `"2d"`, specifies the type of experiment. You can use `"scalar"` for scalar debate or `"2d"` for vector debate.
+
+3. **Run Experiments**: You can run the experiments from the command line by executing the test files in the root directory:
 
    ```bash
    python test/my_experiment.py
@@ -135,9 +143,7 @@ By ensuring you have these prerequisites in place, you'll be ready to use the co
 
    Replace `my_experiment.py` with the name of the test file you want to run. This will execute your experiment using the Python template and generate results accordingly.
 
-### Results
-
-After running experiments using the provided test files, you can find the data files and logs in the "log" directory. The "log" directory is defined in your test files, and it's where your experiment results  are stored.
+4. **Locating Experiment Results**: After running experiments using the provided test files, you can find the data files and logs in the "log" directory. The "log" directory is defined in your test files, and it's where your experiment results  are stored.
 
 ### Plotting and Generating HTML
 
@@ -145,11 +151,18 @@ After running experiments using the provided test files, you can find the data f
 
 The code includes functionality for automatic plotting of data when running experiments. However, if you wish to manually plot a specific data file, you can use the following command:
 
+**scaler debate**:
+
 ```bash
 python -m modules.visual.plot ./log/scalar_debate_temp_0_7/n_agents8_rounds9_n_exp9_2023-10-11_13-44/data.p
 ```
 
-Replace the file path (`./log/scalar_debate_temp_0_7/n_agents8_rounds9_n_exp9_2023-10-11_13-44/data.p`) with the path to the specific data file you want to plot. This command will generate plots based on the provided data file.
+**vector debate**:
+```bash
+python -m modules.visual.plot_2d ./log/vector2d_debate/n_agents3_rounds20_n_exp1_2023-10-27_14-37/trajectory.p
+```
+
+Replace the file path with the path to the specific data file you want to plot. This command will generate plots based on the provided data file.
 
 #### Generating HTML Reports
 

@@ -14,10 +14,12 @@
 
 This file is the source code of our paper "Multi-Agent Consensus Seeking via Large Language Models".
 
-<video autoplay muted loop playsinline height="100%">
-  <source src="https://westlakeintelligentrobotics.github.io/ConsensusLLM/static/videos/animation.mp4"
-          type="video/mp4">
-</video>
+
+
+https://github.com/WestlakeIntelligentRobotics/ConsensusLLM-code/assets/51610063/930ab64c-1ed9-46da-9044-3d253f3c1339
+
+
+
 
 ### Prerequisites
 
@@ -167,3 +169,17 @@ Please note that for automatically generated HTML reports, the script may take i
 
 ### License:
 This project is licensed under the [MIT License](LICENSE).
+
+
+### Citing
+If you find our work useful, please consider citing:
+```BibTeX
+@misc{chen2023multiagent,
+  title={Multi-Agent Consensus Seeking via Large Language Models},
+  author={Huaben Chen and Wenkang Ji and Lufeng Xu and Shiyu Zhao},
+  year={2023},
+  eprint={2310.20151},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL}
+}
+```

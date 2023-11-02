@@ -1,4 +1,39 @@
+"""
+MIT License
+
+Copyright (c) [2023] [Intelligent Unmanned Systems Laboratory at 
+Westlake University]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE, OR OTHER DEALINGS IN
+THE SOFTWARE.
+"""
+
 def render_conversations_to_html(conversations, output_file, simulation_ind):
+    """
+    Render conversations to an HTML file.
+
+    Args:
+        conversations (list): List of conversation data.
+        output_file (str): The path to the output HTML file.
+        simulation_ind (int): Index of the simulation.
+
+    The function takes conversation data and generates an HTML file displaying the conversations.
+    """
     # Number of agents
     num_agents = len(conversations)
 
@@ -58,6 +93,7 @@ def render_conversations_to_html(conversations, output_file, simulation_ind):
         flex-direction: row; /* Chat boxes displayed vertically */
     }}
     '''.format(num_agents=num_agents)
+
     messages_in_line = [[row[i] for row in conversations] for i in range(len(conversations[0]))]
     agent_tiles = ["Agent {} of Case {}".format(ind + 1, simulation_ind + 1) for ind in
                    range(len(conversations))]

@@ -99,7 +99,7 @@ class Vector2dDebate(Template):
             raise ValueError("connectivity_matrix is not enough for "
                              f"{self._n_agents} agents, shape: {self._m.shape}")
 
-    def generate_agents(self, simulation_ind):
+    def _generate_agents(self, simulation_ind):
         """Generate agent instances for the simulation.
 
         Args:
@@ -132,7 +132,7 @@ class Vector2dDebate(Template):
         self._positions[simulation_ind] = position
         return agents
 
-    def generate_question(self, agent, round) -> str:
+    def  _generate_question(self, agent, round) -> str:
         """Generate a question for an agent in a round.
 
         Args:
@@ -145,7 +145,7 @@ class Vector2dDebate(Template):
         input = self._init_input.format(agent.position, agent.other_position)
         return input
 
-    def exp_postprocess(self):
+    def _exp_postprocess(self):
         """Post-process the experiment data, including saving and 
         generating visualizations."""
         is_success, filename = self.save_record(self._output_file)
@@ -156,7 +156,7 @@ class Vector2dDebate(Template):
             video(trajectory_file)
             gen_html(filename, self._output_file)
 
-    def round_postprocess(self, simulation_ind, round, results, agents):
+    def _round_postprocess(self, simulation_ind, round, results, agents):
         """Post-process data at the end of each round of the simulation.
 
         Args:
@@ -176,7 +176,7 @@ class Vector2dDebate(Template):
             other_position = [tuple(x) for x in res_filtered]
             agent.other_position = other_position
 
-    def update_record(self, record, agent_contexts, simulation_ind, agents):
+    def _update_record(self, record, agent_contexts, simulation_ind, agents):
         """Update the experiment record with agent data.
 
         Args:

@@ -79,7 +79,7 @@ class ScalarDebate(Template):
             raise ValueError("connectivity_matrix size doesn't match the "
                              f"number of agents: {self._m.shape}")
 
-    def generate_agents(self, simulation_ind):
+    def _generate_agents(self, simulation_ind):
         """
         Generate agent instances based on provided parameters.
 
@@ -115,7 +115,7 @@ class ScalarDebate(Template):
         self._positions[simulation_ind] = position
         return agents
 
-    def generate_question(self, agent, round) -> str:
+    def  _generate_question(self, agent, round) -> str:
         """
         Generate a question for an agent in a given round.
 
@@ -134,7 +134,7 @@ class ScalarDebate(Template):
                                                    agent.other_position)
         return input
 
-    def exp_postprocess(self):
+    def _exp_postprocess(self):
         """
         Perform post-processing after the experiment, including saving 
         records and generating plots.
@@ -145,7 +145,7 @@ class ScalarDebate(Template):
             plot_result(filename, self._output_file)
             gen_html(filename, self._output_file)
 
-    def round_postprocess(self, simulation_ind, round, results, agents):
+    def _round_postprocess(self, simulation_ind, round, results, agents):
         """
         Perform post-processing for each round of the simulation.
 
@@ -160,7 +160,7 @@ class ScalarDebate(Template):
             other_position = [x for _, x in res_filtered]
             agent.other_position = other_position
 
-    def update_record(self, record, agent_contexts, simulation_ind, agents):
+    def _update_record(self, record, agent_contexts, simulation_ind, agents):
         """
         Update the record with agent contexts for a given simulation.
 

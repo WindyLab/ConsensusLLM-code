@@ -51,11 +51,11 @@ class Template(ABC):
           A lock for ensuring thread safety during data updates.
 
     Subclasses should implement the following abstract methods:
-        - generate_question
-        - generate_agents
-        - update_record
-        - round_postprocess
-        - exp_postprocess
+        -  _generate_question
+        - _generate_agents
+        - _update_record
+        - _round_postprocess
+        - _exp_postprocess
 
     Public Methods:
         - run: Run the experiment using a thread pool for concurrency.
@@ -77,7 +77,7 @@ class Template(ABC):
         self._lock = threading.Lock()  # Lock for thread safety
 
     @abstractmethod
-    def generate_question(self, agent, round) -> str:
+    def  _generate_question(self, agent, round) -> str:
         """
         Generate a question for an agent in a specific round.
 
@@ -91,7 +91,7 @@ class Template(ABC):
         pass
 
     @abstractmethod
-    def generate_agents(self, simulation_ind):
+    def _generate_agents(self, simulation_ind):
         """
         Generate a set of agents for a simulation.
 
@@ -104,7 +104,7 @@ class Template(ABC):
         pass
 
     @abstractmethod
-    def update_record(self, record, agent_contexts, simulation_ind, agents):
+    def _update_record(self, record, agent_contexts, simulation_ind, agents):
         """
         Update the experiment record based on agent data.
 
@@ -117,7 +117,7 @@ class Template(ABC):
         pass
 
     @abstractmethod
-    def round_postprocess(self, simulation_ind, round, results, agents):
+    def _round_postprocess(self, simulation_ind, round, results, agents):
         """
         Perform post-processing for a round of the experiment.
 
@@ -130,7 +130,7 @@ class Template(ABC):
         pass
 
     @abstractmethod
-    def exp_postprocess(self):
+    def _exp_postprocess(self):
         """
         Perform post-processing for the entire experiment.
         """
@@ -155,7 +155,7 @@ class Template(ABC):
         except Exception as e:
             print(f"An exception occurred: {e}")
         finally:
-            self.exp_postprocess()
+            self._exp_postprocess()
 
     def _run_once(self, simulation_ind, progress):
         """
@@ -165,7 +165,7 @@ class Template(ABC):
             simulation_ind: Index of the current simulation.
             progress: Progress bar for tracking the simulation's progress.
         """
-        agents = self.generate_agents(simulation_ind)
+        agents = self._generate_agents(simulation_ind)
         try:
             for round in range(self._n_round):
                 results = queue.Queue()
@@ -173,7 +173,7 @@ class Template(ABC):
                 with ThreadPoolExecutor(n_thread) as agent_executor:
                     futures = []
                     for agent_ind, agent in enumerate(agents):
-                        question = self.generate_question(agent, round)
+                        question = self. _generate_question(agent, round)
                         futures.append(agent_executor
                                        .submit(agent.answer, question, 
                                                agent_ind, round, 
@@ -189,14 +189,14 @@ class Template(ABC):
                 results = list(results.queue)
                 results = sorted(results, key=lambda x: x[0])
                 progress.update(1)
-                self.round_postprocess(simulation_ind, round, results, agents)
+                self._round_postprocess(simulation_ind, round, results, agents)
 
         except Exception as e:
             print(f"error:{e}")
         finally:
             agent_contexts = [agent.get_history() for agent in agents]
             with self._lock:
-                self.update_record(self._record, agent_contexts, 
+                self._update_record(self._record, agent_contexts, 
                                    simulation_ind, agents)
 
     def save_record(self, output_dir: str):

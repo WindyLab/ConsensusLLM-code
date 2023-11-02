@@ -10,11 +10,11 @@ import queue
 class Template(ABC):
   def __init__(self, args):
     # Initialize instance variables
-    self.__record = {}  # A dictionary for recording data
-    self.__n_agent = args.agents  # Number of agents
-    self.__n_round = args.rounds  # Number of rounds
-    self.__n_experiment = args.n_exp  # Number of experiments
-    self.__lock = threading.Lock()  # Lock for thread safety
+    self._record = {}  # A dictionary for recording data
+    self._n_agent = args.agents  # Number of agents
+    self._n_round = args.rounds  # Number of rounds
+    self._n_experiment = args.n_exp  # Number of experiments
+    self._lock = threading.Lock()  # Lock for thread safety
 
   @abstractmethod
   def generate_question(self, agent, round) -> str:
@@ -39,9 +39,9 @@ class Template(ABC):
   def run(self):
     try:
       # Use a thread pool to run experiments concurrently
-      with ThreadPoolExecutor(max_workers=self.__n_experiment) as executor:
-        progress = tqdm(total=self.__n_experiment * self.__n_round, desc="Processing", dynamic_ncols=True)
-        futures = {executor.submit(self.run_once, sim_ind, progress) for sim_ind in range(self.__n_experiment)}
+      with ThreadPoolExecutor(max_workers=self._n_experiment) as executor:
+        progress = tqdm(total=self._n_experiment * self._n_round, desc="Processing", dynamic_ncols=True)
+        futures = {executor.submit(self.run_once, sim_ind, progress) for sim_ind in range(self._n_experiment)}
 
         for future in as_completed(futures):
           if future.exception() is not None:
@@ -55,7 +55,7 @@ class Template(ABC):
   def run_once(self, simulation_ind, progress):
     agents = self.generate_agents(simulation_ind)
     try:
-      for round in range(self.__n_round):
+      for round in range(self._n_round):
         results = queue.Queue()
         n_thread = len(agents) if round < 4 else 1
         # Use a thread pool to run agent tasks concurrently
@@ -80,8 +80,8 @@ class Template(ABC):
       print(f"error:{e}")
     finally:
       agent_contexts = [agent.get_history() for agent in agents]
-      with self.__lock:
-        self.update_record(self.__record, agent_contexts, simulation_ind, agents)
+      with self._lock:
+        self.update_record(self._record, agent_contexts, simulation_ind, agents)
 
   def save_record(self, output_dir: str):
     try:
@@ -89,11 +89,11 @@ class Template(ABC):
         os.makedirs(output_dir)
       data_file = output_dir + '/data.p'
       # Save the record to a pickle file
-      pickle.dump(self.__record, open(data_file, "wb"))
+      pickle.dump(self._record, open(data_file, "wb"))
       return True, data_file
     except Exception as e:
       print(f"An exception occurred while saving the file: {e}")
       print("Saving to the current directory instead.")
       # Backup in case of an exception
-      pickle.dump(self.__record, open("backup_output_file.p", "wb"))
+      pickle.dump(self._record, open("backup_output_file.p", "wb"))
       return False, ""

@@ -36,7 +36,8 @@ def gen_html(data_path, html_dir):
         data_path (str): The path to the data file.
         html_dir (str): The directory to save the generated HTML files.
 
-    Generates HTML output for the conversations and saves them in the specified directory.
+    Generates HTML output for the conversations and saves them in the 
+    specified directory.
     """
     results = read_conversations(data_path)
 

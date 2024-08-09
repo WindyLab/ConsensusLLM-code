@@ -7,7 +7,7 @@
     <img src="https://img.shields.io/badge/arXiv-paper?style=socia&logo=arxiv&logoColor=white&labelColor=grey&color=blue"></a>
   <a href="https://arxiv.org/pdf/2310.20151.pdf">
     <img src="https://img.shields.io/badge/Paper-blue?logo=googledocs&logoColor=white&labelColor=grey&color=blue"></a>
-  <a href="https://westlakeintelligentrobotics.github.io/ConsensusLLM">
+  <a href="https://windylab.github.io/ConsensusLLM">
     <img src="https://img.shields.io/badge/Website-blue?logo=semanticweb&logoColor=white&labelColor=grey&color=blue"></a>
   <a href="https://www.python.org/downloads/">
     <img src="https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white&labelColor=grey&color=blue"></a>
